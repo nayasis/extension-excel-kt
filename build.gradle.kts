@@ -35,7 +35,6 @@ repositories {
 	mavenLocal()
 	mavenCentral()
 	jcenter()
-	maven { url = uri("https://raw.github.com/nayasis/maven-repo/mvn-repo") }
 	maven { url = uri("https://jitpack.io") }
 }
 
@@ -43,16 +42,9 @@ dependencies {
 
 	// kotlin
 	implementation( "com.github.nayasis:basica-kt:develop-SNAPSHOT" ){ isChanging = true }
-//	implementation( "com.github.nayasis:basica-kt:develop-010d28a0ca-1" )
-//	implementation( "com.github.nayasis:basica-kt:develop-010d28a0ca-1" )
 	implementation( "org.apache.poi:poi:5.0.0" )
 	implementation( "org.apache.poi:poi-ooxml:5.0.0" )
-
-//	implementation("org.jetbrains.kotlin:kotlin-reflect")
-//	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-//	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 	implementation( "io.github.microutils:kotlin-logging:1.8.3" )
-//	implementation("au.com.console:kassava:2.1.0-rc.1")
 
 	testImplementation("ch.qos.logback:logback-classic:1.2.3")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")

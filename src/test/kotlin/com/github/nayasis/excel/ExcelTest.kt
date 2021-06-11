@@ -1,5 +1,6 @@
 package com.github.nayasis.excel
 
+import com.github.nayasis.kotlin.basica.core.klass.Classes
 import com.github.nayasis.kotlin.basica.core.path.delete
 import com.github.nayasis.kotlin.basica.core.path.div
 import com.github.nayasis.kotlin.basica.core.path.makeDir
@@ -8,6 +9,7 @@ import com.github.nayasis.kotlin.basica.model.NGrid
 import mu.KotlinLogging
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -28,7 +30,7 @@ internal class ExcelTest {
     }
 
     @Test
-    fun `single`() {
+    fun `read & write`() {
 
         val file = TEST_DIR / "single.xlsx"
 
@@ -36,15 +38,25 @@ internal class ExcelTest {
 
         excel.writeAll(testDatas())
         val sheets = excel.readAll()
-        val first  = sheets["A"]!!
-
-
-        log.debug { "\n${first}" }
-
         assertEquals( 3, sheets.size )
-        assertEquals( "[name, age, city]", first.header().keys().toString() )
-        assertEquals( 45, first.getRow(0)["age"] )
-        assertEquals( "jake", first.getRow(1)["name"] )
+
+        for( sheet in sheets.values ) {
+            assertTrue( sheet.header().containsKey("name") )
+            assertTrue( sheet.header().containsKey("age") )
+            assertTrue( sheet.header().containsKey("city") )
+            assertEquals( 45L, sheet.getRow(0)["age"] )
+            assertEquals( "jake", sheet.getRow(1)["name"] )
+        }
+
+    }
+
+    @Test
+    fun `read from resource`() {
+
+        val excel = Excel(Classes.getResourceStream("/file/option.xlsx"))
+        val sheet = excel.read()
+
+        log.debug { "\n${sheet}" }
 
     }
 

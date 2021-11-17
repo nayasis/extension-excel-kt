@@ -3,8 +3,8 @@ package com.github.nayasis.excel
 import com.github.nayasis.excel.implement.ApachePoiReader
 import com.github.nayasis.excel.implement.ApachePoiWriter
 import com.github.nayasis.kotlin.basica.core.path.extension
-import com.github.nayasis.kotlin.basica.core.path.inStream
-import com.github.nayasis.kotlin.basica.core.path.outStream
+import com.github.nayasis.kotlin.basica.core.path.inputStream
+import com.github.nayasis.kotlin.basica.core.path.outputStream
 import com.github.nayasis.kotlin.basica.core.string.toPath
 import com.github.nayasis.kotlin.basica.model.NGrid
 import java.io.File
@@ -58,7 +58,7 @@ class Excel {
 
     private fun instream(): InputStream {
         return when {
-            path != null -> path!!.inStream()
+            path != null -> path!!.inputStream()
             instream != null -> instream!!
             else -> throw IllegalArgumentException("no resource to read")
         }
@@ -66,7 +66,7 @@ class Excel {
 
     private fun outstream(): OutputStream {
         return when {
-            path != null -> path!!.outStream()
+            path != null -> path!!.outputStream()
             instream != null -> outstream!!
             else -> throw IllegalArgumentException("no resource to write")
         }

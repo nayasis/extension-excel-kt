@@ -27,7 +27,7 @@ class ApachePoiWriter {
     }
 
     private fun createWorkbook(type: String): Workbook {
-        return when(type.toLowerCase()) {
+        return when(type.lowercase()) {
             "xlsx" -> XSSFWorkbook()
             "xls" -> HSSFWorkbook()
             else -> XSSFWorkbook()

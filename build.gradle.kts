@@ -2,22 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	`maven`
-	kotlin("jvm") version "1.4.32"
-	kotlin("plugin.allopen") version "1.4.20"
-	kotlin("plugin.noarg") version "1.4.20"
-	kotlin("plugin.serialization") version "1.4.32"
-}
-
-allOpen {
-	annotation("javax.persistence.Entity")
-	annotation("javax.persistence.MappedSuperclass")
-	annotation("javax.persistence.Embeddable")
+	kotlin("jvm") version "1.5.21"
+	kotlin("plugin.noarg") version "1.5.21"
 }
 
 noArg {
-	annotation("javax.persistence.Entity")
-	annotation("javax.persistence.MappedSuperclass")
-	annotation("javax.persistence.Embeddable")
 	annotation("com.github.nayasis.kotlin.basica.annotation.NoArg")
 	invokeInitializers = true
 }
@@ -31,6 +20,12 @@ configurations.all {
 	resolutionStrategy.cacheDynamicVersionsFor(  5, "minutes" )
 }
 
+java {
+	registerFeature("support") {
+		usingSourceSet(sourceSets["main"])
+	}
+}
+
 repositories {
 	mavenLocal()
 	mavenCentral()
@@ -41,10 +36,12 @@ repositories {
 dependencies {
 
 	// kotlin
-	implementation( "com.github.nayasis:basica-kt:develop-SNAPSHOT" ){ isChanging = true }
+	implementation( "com.github.nayasis:basica-kt:0.1.3" )
 	implementation( "org.apache.poi:poi:5.0.0" )
 	implementation( "org.apache.poi:poi-ooxml:5.0.0" )
-	implementation( "io.github.microutils:kotlin-logging:1.8.3" )
+	implementation("io.github.microutils:kotlin-logging:2.0.10")
+
+	"supportImplementation"("ch.qos.logback:logback-classic:1.2.3")
 
 	testImplementation("ch.qos.logback:logback-classic:1.2.3")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")

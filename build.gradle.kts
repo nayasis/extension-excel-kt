@@ -36,7 +36,7 @@ repositories {
 dependencies {
 
 	// kotlin
-	implementation( "com.github.nayasis:basica-kt:0.1.3" )
+	implementation( "com.github.nayasis:basica-kt:0.1.11" )
 	implementation( "org.apache.poi:poi:5.0.0" )
 	implementation( "org.apache.poi:poi-ooxml:5.0.0" )
 	implementation("io.github.microutils:kotlin-logging:2.0.10")

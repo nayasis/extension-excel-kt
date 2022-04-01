@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	`maven`
-	kotlin("jvm") version "1.5.21"
-	kotlin("plugin.noarg") version "1.5.21"
+	kotlin("jvm") version "1.6.10"
+	kotlin("plugin.noarg") version "1.6.10"
 }
 
 noArg {
@@ -36,7 +36,7 @@ repositories {
 dependencies {
 
 	// kotlin
-	implementation( "com.github.nayasis:basica-kt:0.1.11" )
+	implementation( "com.github.nayasis:basica-kt:0.1.16" )
 	implementation( "org.apache.poi:poi:5.0.0" )
 	implementation( "org.apache.poi:poi-ooxml:5.0.0" )
 	implementation("io.github.microutils:kotlin-logging:2.0.10")

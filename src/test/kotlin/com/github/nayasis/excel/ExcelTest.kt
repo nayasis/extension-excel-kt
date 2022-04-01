@@ -1,10 +1,10 @@
 package com.github.nayasis.excel
 
 import com.github.nayasis.kotlin.basica.core.klass.Classes
+import com.github.nayasis.kotlin.basica.core.path.Paths
 import com.github.nayasis.kotlin.basica.core.path.delete
 import com.github.nayasis.kotlin.basica.core.path.div
 import com.github.nayasis.kotlin.basica.core.path.makeDir
-import com.github.nayasis.kotlin.basica.core.path.userHome
 import com.github.nayasis.kotlin.basica.model.NGrid
 import mu.KotlinLogging
 import org.junit.jupiter.api.AfterEach
@@ -17,7 +17,7 @@ val log = KotlinLogging.logger{}
 
 internal class ExcelTest {
 
-    val TEST_DIR = userHome() / "excel-test"
+    val TEST_DIR = Paths.userHome / "excel-test"
 
     @BeforeEach
     fun makeTemp() {

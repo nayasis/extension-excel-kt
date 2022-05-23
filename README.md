@@ -25,7 +25,7 @@ Microsoft Excel reader / writer
 <dependency>
   <groupId>com.github.nayasis</groupId>
   <artifactId>extension-excel-kt</artifactId>
-  <version>0.1.0</version>
+  <version>x.y.z</version>
 </dependency>
 ```
 
@@ -43,6 +43,6 @@ repositories {
 
 ```kotlin
 dependencies {
-  implementation( "com.github.nayasis:extension-excel-kt:0.1.0" )
+  implementation( "com.github.nayasis:extension-excel-kt:x.y.z" )
 }
 ```

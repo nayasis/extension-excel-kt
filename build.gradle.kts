@@ -36,12 +36,10 @@ repositories {
 dependencies {
 
 	// kotlin
-	implementation( "com.github.nayasis:basica-kt:0.2.1" )
+	implementation( "com.github.nayasis:basica-kt:0.2.5" )
 	implementation( "org.apache.poi:poi:5.0.0" )
 	implementation( "org.apache.poi:poi-ooxml:5.0.0" )
 	implementation("io.github.microutils:kotlin-logging:2.0.10")
-
-	"supportImplementation"("ch.qos.logback:logback-classic:1.2.3")
 
 	testImplementation("ch.qos.logback:logback-classic:1.2.3")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")

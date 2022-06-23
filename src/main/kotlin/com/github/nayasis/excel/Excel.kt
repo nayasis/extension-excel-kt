@@ -2,9 +2,9 @@ package com.github.nayasis.excel
 
 import com.github.nayasis.excel.implement.ApachePoiReader
 import com.github.nayasis.excel.implement.ApachePoiWriter
-import com.github.nayasis.kotlin.basica.core.path.extension
-import com.github.nayasis.kotlin.basica.core.path.inputStream
-import com.github.nayasis.kotlin.basica.core.path.outputStream
+import com.github.nayasis.kotlin.basica.core.io.extension
+import com.github.nayasis.kotlin.basica.core.io.inputStream
+import com.github.nayasis.kotlin.basica.core.io.outputStream
 import com.github.nayasis.kotlin.basica.core.string.toPath
 import com.github.nayasis.kotlin.basica.model.NGrid
 import java.io.File

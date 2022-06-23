@@ -65,7 +65,7 @@ class ApachePoiReader {
         val sheet  = workbook.getSheetAt(index).also { if(it==null) return rs }
         val header = getHeader(sheet,readHeader)
 
-        rs.header().addAll(header.body.values.toSet())
+        rs.header.addAll(header.body.values.toSet())
 
         val formula = workbook.creationHelper.createFormulaEvaluator()
 

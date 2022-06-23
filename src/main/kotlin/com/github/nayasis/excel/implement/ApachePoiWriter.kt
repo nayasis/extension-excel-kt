@@ -14,9 +14,9 @@ private const val MAX_TEXT_LENGTH = 32_707
 
 class ApachePoiWriter {
 
-    fun write(outstream: OutputStream, datas: Map<String,NGrid>, fileType: String, writeHeader: Boolean = true ) {
+    fun write(outstream: OutputStream, data: Map<String,NGrid>, fileType: String, writeHeader: Boolean = true ) {
         val workbook = createWorkbook(fileType)
-        datas.forEach { (name, data) -> writeSheet(workbook,name,data,writeHeader) }
+        data.forEach { (name, data) -> writeSheet(workbook,name,data,writeHeader) }
         outstream.use { workbook.write(outstream) }
     }
 
@@ -43,7 +43,7 @@ class ApachePoiWriter {
         if( writeHeader ) {
             val row   = sheet.createRow(r++)
             val style = getHeaderStyle(workbook)
-            for( alias in data.header().aliases() ) {
+            for( alias in data.header.aliases() ) {
                 row.createCell(c++).apply {
                     setCellValue(alias)
                     cellStyle = style
@@ -54,7 +54,7 @@ class ApachePoiWriter {
         for( map in data ) {
             c = 0
             val row = sheet.createRow(r++)
-            for( key in data.header().keys() ) {
+            for( key in data.header.keys() ) {
                 when(val value = map[key]) {
                     null -> row.createCell(c++)
                     is Number -> row.createCell(c++, NUMERIC).setCellValue(value.toDouble())

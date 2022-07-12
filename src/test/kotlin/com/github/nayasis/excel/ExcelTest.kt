@@ -1,6 +1,5 @@
 package com.github.nayasis.excel
 
-import com.github.nayasis.kotlin.basica.core.klass.Classes
 import com.github.nayasis.kotlin.basica.core.io.Paths
 import com.github.nayasis.kotlin.basica.core.io.delete
 import com.github.nayasis.kotlin.basica.core.io.div
@@ -36,9 +35,7 @@ internal class ExcelTest {
 
         val file = TEST_DIR / "single.xlsx"
 
-        val excel = Excel(file)
-
-        excel.writeAll(testDatas())
+        val excel  = Excel(file).apply { writeAll(testDatas()) }
         val sheets = excel.readAll()
         assertEquals( 3, sheets.size )
 
@@ -54,13 +51,9 @@ internal class ExcelTest {
 
     @Test
     fun `read from resource`() {
-
-//        val excel = Excel(Classes.getResourceStream("/file/option.xlsx"))
         val excel = Excel("/file/option.xlsx".toResource()!!.inStream())
         val sheet = excel.read()
-
         log.debug { "\n${sheet}" }
-
     }
 
     private fun testData(): NGrid {

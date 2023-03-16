@@ -1,6 +1,6 @@
 # extension-excel-kt
 
-Microsoft Excel reader / writer 
+read and write Microsoft Excel and CSV file
 
 [![](https://jitpack.io/v/nayasis/extension-excel-kt.svg)](https://jitpack.io/#nayasis/extension-excel-kt)
 

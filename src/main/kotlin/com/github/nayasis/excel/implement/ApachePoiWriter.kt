@@ -1,5 +1,6 @@
 package com.github.nayasis.excel.implement
 
+import com.github.nayasis.excel.ExcelType
 import com.github.nayasis.kotlin.basica.core.validator.nvl
 import com.github.nayasis.kotlin.basica.model.NGrid
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -14,32 +15,28 @@ private const val MAX_TEXT_LENGTH = 32_707
 
 class ApachePoiWriter {
 
-    fun write(outstream: OutputStream, data: Map<String,NGrid>, fileType: String, writeHeader: Boolean = true ) {
+    fun write(outstream: OutputStream, data: Map<String,NGrid>, fileType: ExcelType, writeHeader: Boolean = true ) {
         val workbook = createWorkbook(fileType)
         data.forEach { (name, data) -> writeSheet(workbook,name,data,writeHeader) }
         outstream.use { workbook.write(outstream) }
     }
 
-    fun write(outstream: OutputStream, data: NGrid, sheetName: String, fileType: String, writeHeader: Boolean = true ) {
+    fun write(outstream: OutputStream, data: NGrid, sheetName: String, fileType: ExcelType, writeHeader: Boolean = true ) {
         val workbook = createWorkbook(fileType)
         writeSheet(workbook,sheetName,data,writeHeader)
         outstream.use { workbook.write(outstream) }
     }
 
-    private fun createWorkbook(type: String): Workbook {
-        return when(type.lowercase()) {
-            "xlsx" -> XSSFWorkbook()
-            "xls" -> HSSFWorkbook()
-            else -> XSSFWorkbook()
+    private fun createWorkbook(type: ExcelType): Workbook {
+        return when(type) {
+            ExcelType.XLSX -> XSSFWorkbook()
+            ExcelType.XLS  -> HSSFWorkbook()
         }
     }
 
     private fun writeSheet(workbook: Workbook, sheetName: String, data: NGrid, writeHeader: Boolean) {
-
         var r = 0; var c = 0
-
         val sheet = workbook.createSheet(sheetName)
-
         if( writeHeader ) {
             val row   = sheet.createRow(r++)
             val style = getHeaderStyle(workbook)
@@ -50,7 +47,6 @@ class ApachePoiWriter {
                 }
             }
         }
-
         for( map in data ) {
             c = 0
             val row = sheet.createRow(r++)
@@ -63,8 +59,6 @@ class ApachePoiWriter {
                 }
             }
         }
-
-
     }
 
     private fun toText(obj: Any?): String {

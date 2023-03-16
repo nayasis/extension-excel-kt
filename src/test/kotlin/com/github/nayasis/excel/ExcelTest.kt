@@ -5,7 +5,6 @@ import com.github.nayasis.kotlin.basica.core.io.delete
 import com.github.nayasis.kotlin.basica.core.io.div
 import com.github.nayasis.kotlin.basica.core.io.makeDir
 import com.github.nayasis.kotlin.basica.core.string.toResource
-import com.github.nayasis.kotlin.basica.core.url.inStream
 import com.github.nayasis.kotlin.basica.model.NGrid
 import mu.KotlinLogging
 import org.junit.jupiter.api.AfterEach
@@ -14,11 +13,15 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-val log = KotlinLogging.logger{}
+private val logger = KotlinLogging.logger{}
 
 internal class ExcelTest {
 
-    val TEST_DIR = Paths.userHome / "excel-test"
+    init {
+        NGrid.fullFontWidth = 2.0
+    }
+
+    private val TEST_DIR = Paths.userHome / "excel-test"
 
     @BeforeEach
     fun makeTemp() {
@@ -35,7 +38,7 @@ internal class ExcelTest {
 
         val file = TEST_DIR / "single.xlsx"
 
-        val excel  = Excel(file).apply { writeAll(testDatas()) }
+        val excel  = Excel(file).apply { writeAll(dataMultisheet()) }
         val sheets = excel.readAll()
         assertEquals( 3, sheets.size )
 
@@ -51,24 +54,38 @@ internal class ExcelTest {
 
     @Test
     fun `read from resource`() {
-        val excel = Excel("/file/option.xlsx".toResource()!!.inStream())
+        val excel = Excel("/file/option.xlsx".toResource()!!)
         val sheet = excel.read()
-        log.debug { "\n${sheet}" }
+        logger.debug { "\n${sheet}" }
     }
 
-    private fun testData(): NGrid {
+    private fun dataSingleSheet(): NGrid {
         return NGrid().apply {
             addRow(Person("nayasis", 45, "seoul"))
             addRow(Person("jake", 9, "sung-nam"))
         }
     }
 
-    private fun testDatas(): Map<String,NGrid> {
+    private fun dataMultisheet(): Map<String,NGrid> {
         return mapOf(
-            "A" to testData(),
-            "B" to testData(),
-            "C" to testData(),
+            "A" to dataSingleSheet(),
+            "B" to dataSingleSheet(),
+            "C" to dataSingleSheet(),
         )
+    }
+
+    @Test
+    fun `charset encoding`() {
+        val excel = Excel("/file/charset.xlsx".toResource()!!)
+        val sheet = excel.read()
+        logger.debug { "\n${sheet.toString()}" }
+        assertEquals("سلام", sheet.getData(0,"name"))
+        assertEquals("아무개", sheet.getData(1,"name"))
+        assertEquals("nobody", sheet.getData(2,"name"))
+        assertEquals("任何", sheet.getData(3,"name"))
+        assertEquals("どれか", sheet.getData(4,"name"))
+        assertEquals("erklären", sheet.getData(5,"name"))
+        assertEquals("Café", sheet.getData(6,"name"))
     }
 
 }

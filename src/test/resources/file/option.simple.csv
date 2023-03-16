@@ -1,0 +1,19 @@
+item,gambatte_gbc_color_correction_mode,,,gambatte_gbc_frontlight_position,,
+caption,Color Correction Mode,,,Color correction - Frontlight position,,
+show,TRUE,,,TRUE,,
+key,,,,,,
+desc,"Specifies the method to use when performing color correction.
+
+'accurate': Provides a very close approximation of the image displayed on a real Game Boy Color LCD panel.
+
+'fast': Darkens colors in a loose approximation of the image displayed on a real Game Boy Color LCD panel. Has negligible performance impact, and may be used on low-end hardware in cases where the 'accurate' method is too slow.",,,"Simulates the physical response of the Game Boy Color LCD panel when illuminated from different angles.
+
+'central': Standard color reproduction, corresponding to ambient light hitting the screen at 90¡Æ.
+
+'above screen': Increases brightness (gamma), corresponding to sunlight or a ceiling light shining on the screen from above.
+
+'below screen': Reduces brightness (gamma), corresponding to light shining on the screen from below.",,
+type,combo,label,value,combo,label,value
+,,Accurate,accurate,,Center,center
+,,Fast,fast,,Above Screen,above Screen
+,,,,,Below Screen,below Screen

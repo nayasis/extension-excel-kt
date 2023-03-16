@@ -112,12 +112,12 @@ class ApachePoiReader {
         sheet.getRow(0)?.let{ row ->
             try {
                 for( i in 0 until count )
-                    header.body[i] = if(readHeader) row.getCell(i).stringCellValue else nvl(i)
+                    header.body[i] = if(readHeader) row.getCell(i).stringCellValue else "$i"
                 header.has = true
             } catch (e: NullPointerException) {
                 header.body.clear()
                 for( i in 0 until count )
-                    header.body[i] = nvl(i)
+                    header.body[i] = "$i"
             }
         }
 
@@ -148,23 +148,12 @@ class ApachePoiReader {
         }
     }
 
-
     private fun isDateFormatted( cell: Cell? ): Boolean {
-
         if( cell == null || ! DateUtil.isValidExcelDate(cell.numericCellValue) ) return false
-
         val style = cell.cellStyle.also { if(it==null) return false }
-
         val formatIndex = style.dataFormat.toInt()
         val format      = style.dataFormatString.replace( "([^\\\\])\".*?[^\\\\]\"".toRegex(), "$1" );
-
         return DateUtil.isADateFormat(formatIndex,format)
-
     }
 
 }
-
-data class Header(
-    val body: LinkedHashMap<Int,String> = LinkedHashMap(),
-    var has: Boolean = false,
-)

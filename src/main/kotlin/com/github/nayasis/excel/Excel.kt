@@ -6,90 +6,115 @@ import com.github.nayasis.kotlin.basica.core.io.extension
 import com.github.nayasis.kotlin.basica.core.io.inputStream
 import com.github.nayasis.kotlin.basica.core.io.outputStream
 import com.github.nayasis.kotlin.basica.core.string.toPath
+import com.github.nayasis.kotlin.basica.core.url.toInputStream
 import com.github.nayasis.kotlin.basica.model.NGrid
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.net.URL
 import java.nio.file.Path
 
 private const val DEFAULT_SHEET = "Sheet1"
 
+/**
+ * Excel reader / writer
+ */
 class Excel {
 
-    var fileType = "xlsx"
-
-    private val reader = ApachePoiReader()
-    private val writer = ApachePoiWriter()
-
-    private var path: Path?              = null
-    private var instream: InputStream?   = null
-    private var outstream: OutputStream? = null
+    private var _path: Path?                 = null
+    private var _resource: URL?              = null
+    private var _inputstream: InputStream?   = null
+    private var _outputstream: OutputStream? = null
 
     constructor(file: File) {
-        path = file.toPath()
-        fileType = file.extension
+        _path = file.toPath()
     }
 
     constructor(path: Path) {
-        this.path = path
-        fileType = path.extension
+        this._path = path
     }
 
     constructor(path: String) {
-        this.path = path.toPath()
-        fileType = this.path!!.extension
+        this._path = path.toPath()
+    }
+
+    constructor(resource: URL) {
+        _resource = resource
     }
 
     constructor(instream: InputStream) {
-        this.instream = instream
+        this._inputstream = instream
     }
 
     constructor(outstream: OutputStream) {
-        this.outstream = outstream
+        this._outputstream = outstream
     }
 
-    fun instream(instream: InputStream) {
-        this.instream = instream
-    }
-
-    fun outtream(outstream: OutputStream) {
-        this.outstream = outstream
-    }
-
-    private fun instream(): InputStream {
+    private fun inputstream(): InputStream {
         return when {
-            path != null -> path!!.inputStream()
-            instream != null -> instream!!
-            else -> throw IllegalArgumentException("no resource to read")
+            _path != null -> _path!!.inputStream()
+            _resource != null -> _resource!!.toInputStream()
+            _inputstream != null -> _inputstream!!
+            else -> throw IOException("No inputstream exists")
         }
     }
 
-    private fun outstream(): OutputStream {
+    private fun outputstream(): OutputStream {
         return when {
-            path != null -> path!!.outputStream()
-            instream != null -> outstream!!
-            else -> throw IllegalArgumentException("no resource to write")
+            _path != null -> _path!!.outputStream()
+            _inputstream != null -> _outputstream!!
+            else -> throw IOException("No outputstream exists")
         }
     }
 
     fun readAll(readHeader: Boolean = true): Map<String,NGrid> {
-        return reader.readAll(instream(),readHeader)
+        try {
+            return ApachePoiReader().readAll(inputstream(),readHeader)
+        } finally {
+            _inputstream = null
+        }
     }
 
     fun read(readHeader: Boolean = true): NGrid {
-        return reader.read(instream(),readHeader)
+        try {
+            return ApachePoiReader().read(inputstream(),readHeader)
+        } finally {
+            _inputstream = null
+        }
     }
 
     fun read(sheetName: String, readHeader: Boolean = true): NGrid {
-        return reader.read(instream(),sheetName,readHeader)
+        try {
+            return ApachePoiReader().read(inputstream(),sheetName,readHeader)
+        } finally {
+            _inputstream = null
+        }
     }
 
-    fun writeAll(datas: Map<String,NGrid>, readHeader: Boolean = true) {
-        writer.write(outstream(),datas,fileType,readHeader)
+    fun writeAll(multiData: Map<String,NGrid>, readHeader: Boolean = true, fileType: ExcelType? = null) {
+        try {
+            ApachePoiWriter().write(outputstream(), multiData, getFileType(fileType), readHeader)
+        } finally {
+            _outputstream = null
+        }
     }
 
-    fun write(data: NGrid, sheetName: String = DEFAULT_SHEET, readHeader: Boolean = true) {
-        writer.write(outstream(),data,sheetName,fileType,readHeader)
+    fun write(data: NGrid, sheetName: String = DEFAULT_SHEET, readHeader: Boolean = true, fileType: ExcelType? = null) {
+        try {
+            ApachePoiWriter().write(outputstream(), data, sheetName, getFileType(fileType), readHeader)
+        } finally {
+            _outputstream = null
+        }
+    }
+
+    private fun getFileType(defaultType: ExcelType?): ExcelType {
+        return when {
+            defaultType != null -> defaultType
+            _path != null       -> ExcelType.of(_path!!.extension)
+            _resource != null   -> ExcelType.of(_resource.toString().substringAfterLast('.', ""))
+            else                -> ExcelType.XLSX
+        }
     }
 
 }

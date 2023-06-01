@@ -32,22 +32,23 @@ java {
 repositories {
 	mavenLocal()
 	mavenCentral()
+	jcenter()
 	maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
 
 	// kotlin
-	implementation("com.github.nayasis:basica-kt:0.2.18")
+	implementation("com.github.nayasis:basica-kt:0.2.22")
 	implementation("org.apache.poi:poi:5.2.2")
 	implementation("org.apache.poi:poi-ooxml:5.2.2")
 	implementation("com.opencsv:opencsv:5.7.1")
 	implementation("io.github.microutils:kotlin-logging:3.0.5")
 
-	testImplementation("ch.qos.logback:logback-classic:1.3.5")
-	testImplementation("org.apache.logging.log4j:log4j-core:2.19.0")
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.1")
+	testImplementation("ch.qos.logback:logback-classic:1.4.6")
+	testImplementation("org.apache.logging.log4j:log4j-core:2.20.0")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 
 }
 

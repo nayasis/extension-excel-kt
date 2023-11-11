@@ -1,6 +1,5 @@
 package com.github.nayasis.excel.implement
 
-import com.github.nayasis.kotlin.basica.core.extention.isEmpty
 import com.github.nayasis.kotlin.basica.model.NGrid
 import com.opencsv.CSVReader
 import java.io.Reader

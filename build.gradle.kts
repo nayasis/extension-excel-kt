@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	`java`
 	`maven-publish`
-	kotlin("jvm") version "1.8.10"
-	kotlin("plugin.noarg") version "1.8.10"
+	kotlin("jvm") version "1.9.20"
+	kotlin("plugin.noarg") version "1.9.20"
 }
 
 noArg {
@@ -39,7 +39,7 @@ repositories {
 dependencies {
 
 	// kotlin
-	implementation("com.github.nayasis:basica-kt:0.2.22")
+	implementation("com.github.nayasis:basica-kt:0.3.1")
 	implementation("org.apache.poi:poi:5.2.2")
 	implementation("org.apache.poi:poi-ooxml:5.2.2")
 	implementation("com.opencsv:opencsv:5.7.1")

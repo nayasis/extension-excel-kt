@@ -7,24 +7,16 @@ plugins {
 	kotlin("plugin.noarg") version "1.9.20"
 }
 
-noArg {
-	annotation("com.github.nayasis.kotlin.basica.annotation.NoArg")
-	invokeInitializers = true
-}
-
 group = "com.github.nayasis"
-version = "0.1.0"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
+version = "0.2.3-SNAPSHOT"
 configurations.all {
 	resolutionStrategy.cacheChangingModulesFor(0, "seconds")
 	resolutionStrategy.cacheDynamicVersionsFor(  5, "minutes" )
 }
 
 java {
-	registerFeature("support") {
-		usingSourceSet(sourceSets["main"])
-	}
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 	withJavadocJar()
 	withSourcesJar()
 }
@@ -32,13 +24,10 @@ java {
 repositories {
 	mavenLocal()
 	mavenCentral()
-	jcenter()
 	maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
-
-	// kotlin
 	implementation("com.github.nayasis:basica-kt:0.3.1")
 	implementation("org.apache.poi:poi:5.2.2")
 	implementation("org.apache.poi:poi-ooxml:5.2.2")

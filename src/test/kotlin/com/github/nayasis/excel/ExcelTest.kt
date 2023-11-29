@@ -34,6 +34,22 @@ internal class ExcelTest {
     }
 
     @Test
+    fun `write`() {
+
+        val file = TEST_DIR / "single.xlsx"
+
+        val excel  = Excel(file).apply { write(dataSingleSheet()) }
+        val sheet  = excel.read()
+
+        assertTrue( sheet.header.containsKey("name") )
+        assertTrue( sheet.header.containsKey("age") )
+        assertTrue( sheet.header.containsKey("city") )
+        assertEquals( 45L, sheet.getRow(0)["age"] )
+        assertEquals( "jake", sheet.getRow(1)["name"] )
+
+    }
+
+    @Test
     fun `read & write`() {
 
         val file = TEST_DIR / "single.xlsx"

@@ -14,7 +14,6 @@ noArg {
 
 group = "com.github.nayasis"
 version = "0.2.3-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 configurations.all {
 	resolutionStrategy.cacheChangingModulesFor(0, "seconds")
@@ -22,9 +21,8 @@ configurations.all {
 }
 
 java {
-	registerFeature("support") {
-		usingSourceSet(sourceSets["main"])
-	}
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 	withJavadocJar()
 	withSourcesJar()
 }
